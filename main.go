@@ -3,6 +3,8 @@ package main
 import ( 
     "fmt"
     "time"
+    "os/exec"
+    "os"
 )
 
 type GameOfLife struct { 
@@ -113,7 +115,7 @@ func main(){
     gof := NewGameOfLife(60, 40)
 
     gof.cells[5 + 15][1 + 50] = true
-    gof.cells[6 + 15][3 + 50] = true 
+    gof.cells[6 + 15][3 + 50] = true
     gof.cells[7 + 15][0 + 50] = true
     gof.cells[7 + 15][1 + 50] = true
     gof.cells[7 + 15][4 + 50] = true
@@ -121,7 +123,10 @@ func main(){
     gof.cells[7 + 15][6 + 50] = true
     
     for { 
-        fmt.Print("\033[H\033[2J")
+        cmd := exec.Command("clear")
+        cmd.Stdout = os.Stdout
+        cmd.Run()
+
         fmt.Println("current generation: ", gof.generation)
         gof.Display()
         gof.PlayRound()
